@@ -51,7 +51,7 @@ nav ul.open {
   .burger {
     display: none;
   }
-  
+
   nav ul {
     position: static;
     width: auto;
@@ -59,7 +59,7 @@ nav ul.open {
     flex-direction: row;
     gap: 2rem;
   }
-  
+
   nav ul a {
     font-size: 1rem;
   }

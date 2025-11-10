@@ -1,0 +1,36 @@
+#hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--dark);
+    text-align: center;
+    padding: 2rem;
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#hero p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    color: var(--beige-medium);
+}
+
+/* Tablette */
+@media (min-width: 768px) {
+
+    #hero h2 {
+        font-size: 5rem;
+    }
+
+    #hero p {
+        font-size: 1.5rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {}

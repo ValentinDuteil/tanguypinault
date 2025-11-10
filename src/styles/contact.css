@@ -1,5 +1,5 @@
 /* Mobile First */
-#portfolio {
+#contact {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -10,19 +10,14 @@
     padding: 2rem;
 }
 
-#portfolio h2 {
+#contact h2 {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--beige-medium);
 }
 
 /* Tablette */
-@media (min-width: 768px) {
-
-    #portfolio h2 {
-        font-size: 5rem;
-    }
-}
+@media (min-width: 768px) {}
 
 /* Desktop */
 @media (min-width: 1024px) {}

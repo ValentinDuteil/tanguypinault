@@ -1,0 +1,37 @@
+/* Mobile First */
+#course {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--beige-light);
+    text-align: center;
+    padding: 2rem;
+}
+
+#course h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+#course p {
+    font-size: 1.2rem;
+    color: var(--grey);
+}
+
+/* Tablette */
+@media (min-width: 768px) {
+
+    #course h2 {
+        font-size: 5rem;
+    }
+
+    #course p {
+        font-size: 1.5rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {}
