@@ -1,0 +1,44 @@
+/* Header mobile first */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--dark);
+  z-index: 100;
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.burger {
+  background: none;
+  border: none;
+  color: var(--beige-light);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Menu caché par défaut sur mobile */
+nav ul {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transition: right 0.3s ease;
+}
+
+nav ul a {
+  color: var(--beige-light);
+  text-decoration: none;
+  font-size: 1.5rem;
+}
