@@ -1,18 +1,18 @@
-/* Mobile First */
+/* === BASE === */
 #portfolio {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: var(--dark);
     text-align: center;
-    padding: 2rem;
+    padding: 4rem 2rem;
 }
 
 #portfolio h2 {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: var(--beige-medium);
 }
 
@@ -21,8 +21,6 @@
     gap: 19px;
     width: 100%;
     justify-content: center;
-    grid-template-columns: repeat(4, 70px);
-    grid-auto-rows: 206px;
 }
 
 .portfolio-item {
@@ -34,139 +32,114 @@
     color: var(--dark);
 }
 
-.size-a {
-    grid-column: span 1;
-    grid-row: span 1;
+/* === MOBILE === */
+.portfolio-grid {
+    grid-template-columns: repeat(2, 140px);
+    grid-template-rows: repeat(14, 206px);
 }
 
-.size-b {
-    grid-column: span 2;
-    grid-row: span 1;
-}
-
-.size-c {
-    grid-column: span 2;
-    grid-row: span 2;
-}
-
-.size-d {
+/* Masquer items desktop/tablette */
+.desktop-tablet {
     display: none;
 }
 
-.size-e {
-    display: none;
-}
-
+/* Afficher items mobile */
 .mobile-only {
-    display: block;
+    display: flex;
 }
 
-.tablet-up {
-    display: none;
-}
+/* Placement mobile (items 18-31) */
+.item-18 { grid-column: 1 / 3; grid-row: 1 / 3; } /* C */
+.item-19 { grid-column: 1 / 3; grid-row: 3; } /* B */
+.item-20 { grid-column: 1; grid-row: 4; } /* A */
+.item-21 { grid-column: 2; grid-row: 4; } /* A */
+.item-22 { grid-column: 1 / 3; grid-row: 5 / 7; } /* C */
+.item-23 { grid-column: 1; grid-row: 7; } /* A */
+.item-24 { grid-column: 2; grid-row: 7; } /* A */
+.item-25 { grid-column: 1; grid-row: 8; } /* A */
+.item-26 { grid-column: 2; grid-row: 8; } /* A */
+.item-27 { grid-column: 1 / 3; grid-row: 9 / 11; } /* C */
+.item-28 { grid-column: 1; grid-row: 11; } /* A */
+.item-29 { grid-column: 2; grid-row: 11; } /* A */
+.item-30 { grid-column: 1 / 3; grid-row: 12; } /* B */
+.item-31 { grid-column: 1 / 3; grid-row: 13 / 15; } /* C */
 
-.tablet-only {
-    display: none;
-}
-
-.desktop-only {
-    display: none;
-}
-
-
-/* Tablette */
-@media (min-width: 768px) {
-
-    #portfolio h2 {
-        font-size: 5rem;
-    }
-
+/* === TABLETTE === */
+@media (min-width: 768px) and (max-width: 1023px) {
     .portfolio-grid {
         grid-template-columns: repeat(3, 299px);
-        grid-auto-rows: 188px;
+        grid-template-rows: repeat(12, 188px);
     }
-
-    .size-a {
-        display: none;
-    }
-
-    .size-b {
-        grid-column: span 1;
-        grid-row: span 1;
-    }
-
-    .size-c {
-        grid-column: span 1;
-        grid-row: span 2;
-    }
-
-    .size-d {
-        display: block;
-        grid-column: span 2;
-        grid-row: span 1;
-    }
-
-    .size-e {
-        display: block;
-        grid-column: span 1;
-        grid-row: span 4;
-    }
-
+    
+    /* Masquer mobile, afficher desktop-tablet */
     .mobile-only {
         display: none;
     }
-
-    .tablet-up {
-        display: block;
+    
+    .desktop-tablet {
+        display: flex;
     }
-
-    .tablet-only {
-        display: block;
-    }
-
-    .mobile-b {
-        grid-column: span 1;
-        grid-row: span 2;
-    }
+    
+    /* Placement tablette (items 1-17) */
+    .item-1 { grid-column: 1; grid-row: 1 / 3; } /* C/1/1.2 */
+    .item-2 { grid-column: 1; grid-row: 3; } /* B/1/3 */
+    .item-3 { grid-column: 1 / 3; grid-row: 4; } /* D/1.2/4 */
+    .item-4 { grid-column: 1; grid-row: 5 / 9; } /* E/1/5.6.7.8 */
+    .item-5 { grid-column: 1; grid-row: 9 / 11; } /* C/1/9.10 */
+    .item-6 { grid-column: 1; grid-row: 11; } /* B/1/11 */
+    .item-7 { grid-column: 1 / 3; grid-row: 12; } /* D/1.2/12 */
+    .item-8 { grid-column: 2 / 4; grid-row: 1; } /* D/2.3/1 */
+    .item-9 { grid-column: 2; grid-row: 2 / 4; } /* C/2/2.3 */
+    .item-10 { grid-column: 2; grid-row: 5 / 9; } /* E/2/5.6.7.8 */
+    .item-11 { grid-column: 2 / 4; grid-row: 9; } /* D/2.3/9 */
+    .item-12 { grid-column: 2; grid-row: 10 / 12; } /* C/2/10.11 */
+    .item-13 { grid-column: 3; grid-row: 2; } /* B/3/2 */
+    .item-14 { grid-column: 3; grid-row: 3 / 5; } /* C/3/3.4 */
+    .item-15 { grid-column: 3; grid-row: 5 / 9; } /* E/3/5.6.7.8 */
+    .item-16 { grid-column: 3; grid-row: 10; } /* B/3/10 */
+    .item-17 { grid-column: 3; grid-row: 11 / 13; } /* C/3/11.12 */
 }
 
-/* Desktop */
+/* === DESKTOP === */
 @media (min-width: 1024px) {
-
     .portfolio-grid {
         grid-template-columns: repeat(4, 281px);
-        grid-auto-rows: 177px;
+        grid-template-rows: repeat(8, 177px);
     }
-
-    .size-a {
-        display: none;
+    
+    /* Masquer mobile et item 10 (E central tablette) */
+    .mobile-only,
+    .item-10 {
+        display: none !important;
     }
-
-    .size-b {
-        grid-column: span 1;
-        grid-row: span 1;
+    
+    .desktop-tablet {
+        display: flex;
     }
+    
+    /* Placement desktop (items 1-9, 11-17) */
+    .item-1 { grid-column: 1; grid-row: 1 / 5; } /* E/1/1234 */
+    .item-2 { grid-column: 2; grid-row: 1 / 3; } /* C/2/12 */
+    .item-3 { grid-column: 2; grid-row: 3; } /* B/2/3 */
+    .item-4 { grid-column: 2 / 4; grid-row: 4; } /* D/23/4 */
+    .item-5 { grid-column: 3 / 5; grid-row: 1; } /* D/34/1 */
+    .item-6 { grid-column: 3; grid-row: 2 / 4; } /* C/3/23 */
+    .item-7 { grid-column: 4; grid-row: 2; } /* B/4/2 */
+    .item-8 { grid-column: 4; grid-row: 3 / 5; } /* C/4/34 */
+    .item-9 { grid-column: 1; grid-row: 5 / 7; } /* C/1/56 */
+    /* item-10 masqué */
+    .item-11 { grid-column: 1; grid-row: 7; } /* B/1/7 */
+    .item-12 { grid-column: 1 / 3; grid-row: 8; } /* D/12/8 */
+    .item-13 { grid-column: 2 / 4; grid-row: 5; } /* D/23/5 */
+    .item-14 { grid-column: 2; grid-row: 6 / 8; } /* C/2/67 */
+    .item-15 { grid-column: 3; grid-row: 6; } /* B/3/6 */
+    .item-16 { grid-column: 3; grid-row: 7 / 9; } /* C/3/78 */
+    .item-17 { grid-column: 4; grid-row: 5 / 9; } /* E/4/5678 */
+}
 
-    .size-c {
-        grid-column: span 1;
-        grid-row: span 2;
-    }
-
-    .size-d {
-        grid-column: span 2;
-        grid-row: span 1;
-    }
-
-    .size-e {
-        grid-column: span 1;
-        grid-row: span 4;
-    }
-
-    .tablet-only {
-        display: none;
-    }
-
-    .desktop-only {
-        display: block;
+/* Responsive titres */
+@media (min-width: 768px) {
+    #portfolio h2 {
+        font-size: 5rem;
     }
 }
