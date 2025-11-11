@@ -16,13 +16,157 @@
     color: var(--beige-medium);
 }
 
+.portfolio-grid {
+    display: grid;
+    gap: 19px;
+    width: 100%;
+    justify-content: center;
+    grid-template-columns: repeat(4, 70px);
+    grid-auto-rows: 206px;
+}
+
+.portfolio-item {
+    background: var(--beige-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--dark);
+}
+
+.size-a {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.size-b {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.size-c {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.size-d {
+    display: none;
+}
+
+.size-e {
+    display: none;
+}
+
+.mobile-only {
+    display: block;
+}
+
+.tablet-up {
+    display: none;
+}
+
+.tablet-only {
+    display: none;
+}
+
+.desktop-only {
+    display: none;
+}
+
+
 /* Tablette */
 @media (min-width: 768px) {
 
     #portfolio h2 {
         font-size: 5rem;
     }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 299px);
+        grid-auto-rows: 188px;
+    }
+
+    .size-a {
+        display: none;
+    }
+
+    .size-b {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .size-c {
+        grid-column: span 1;
+        grid-row: span 2;
+    }
+
+    .size-d {
+        display: block;
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .size-e {
+        display: block;
+        grid-column: span 1;
+        grid-row: span 4;
+    }
+
+    .mobile-only {
+        display: none;
+    }
+
+    .tablet-up {
+        display: block;
+    }
+
+    .tablet-only {
+        display: block;
+    }
+
+    .mobile-b {
+        grid-column: span 1;
+        grid-row: span 2;
+    }
 }
 
 /* Desktop */
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+
+    .portfolio-grid {
+        grid-template-columns: repeat(4, 281px);
+        grid-auto-rows: 177px;
+    }
+
+    .size-a {
+        display: none;
+    }
+
+    .size-b {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .size-c {
+        grid-column: span 1;
+        grid-row: span 2;
+    }
+
+    .size-d {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .size-e {
+        grid-column: span 1;
+        grid-row: span 4;
+    }
+
+    .tablet-only {
+        display: none;
+    }
+
+    .desktop-only {
+        display: block;
+    }
+}
