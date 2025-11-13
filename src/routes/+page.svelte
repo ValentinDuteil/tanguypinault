@@ -9,11 +9,53 @@
 	import '../styles/contact.css';
 	import '../styles/footer.css';
 
+	import { onMount } from 'svelte';
+
+
 	let menuOpen = false;
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
 	}
+
+	// Smooth scroll (déjà présent)
+onMount(() => {
+    const links = document.querySelectorAll('a[href^="#"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                menuOpen = false;
+            }
+        });
+    });
+    
+    // Animation au scroll pour portfolio items
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    // Observer tous les items portfolio
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    portfolioItems.forEach(item => observer.observe(item));
+});
 </script>
 
 <header>
