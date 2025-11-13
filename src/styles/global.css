@@ -7,6 +7,10 @@
   --grey: #6B6B6B;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--dark);
