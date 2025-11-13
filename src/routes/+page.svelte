@@ -70,6 +70,8 @@ onMount(() => {
 	</nav>
 </header>
 
+<div class="menu-overlay" class:active={menuOpen} onclick={toggleMenu}></div>
+
 <main>
 	<section id="hero">
 		<h1>Pinault Tanguy</h1>
@@ -79,7 +81,7 @@ onMount(() => {
 	<section id="profile">
 		<h2>Présentation</h2>
 		<p>lorem ipsum niezOFH B HUHEZui efjze uiifhze e jibfhkz uihfui z nnjihui</p>
-		<button class="scroll-top" aria-label="Retour en haut">🢕</button>
+		<button class="scroll-top" onclick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>🢕</button>
 	</section>
 
 	<section id="portfolio">
@@ -120,12 +122,12 @@ onMount(() => {
     <div class="portfolio-item mobile-only item-30">M13</div>
     <div class="portfolio-item mobile-only item-31">M14</div>
 </div>
-		<button class="scroll-top" aria-label="Retour en haut">🢕</button>
+		<button class="scroll-top" onclick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>🢕</button>
 	</section>
 
 	<section id="course">
 		<h2>Parcours</h2>
-		<button class="scroll-top" aria-label="Retour en haut">🢕</button>
+		<button class="scroll-top" onclick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>🢕</button>
 	</section>
 
 	<section id="contact">
@@ -148,7 +150,7 @@ onMount(() => {
         
         <button type="submit" class="submit-btn">Envoyer</button>
     </form>
-    <button class="scroll-top" aria-label="Retour en haut">🢕</button>
+    <button class="scroll-top" onclick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>🢕</button>
 </section>
 </main>
 

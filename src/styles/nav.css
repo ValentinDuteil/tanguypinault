@@ -1,10 +1,9 @@
 /* Header mobile first */
 header {
-  position: fixed;
+  position: static;
   top: 0;
   width: 100%;
   background: var(--dark);
-  z-index: 100;
   padding: 1rem;
 }
 
@@ -19,6 +18,8 @@ nav {
   color: var(--beige-light);
   font-size: 2rem;
   cursor: pointer;
+  position: relative;
+  z-index: 1001;
 }
 
 /* Menu caché par défaut sur mobile */
@@ -28,13 +29,16 @@ nav ul {
   right: -100%;
   width: 70%;
   height: 100vh;
-  background: var(--dark);
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid var(--gold);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2rem;
   transition: right 0.3s ease;
+  z-index: 1000;
 }
 
 nav ul a {
@@ -47,20 +51,48 @@ nav ul.open {
   right: 0;
 }
 
+/* Overlay pour fermer au clic extérieur */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Desktop */
 @media (min-width: 768px) {
   .burger {
     display: none;
   }
-
+  
   nav ul {
     position: static;
     width: auto;
     height: auto;
     flex-direction: row;
     gap: 2rem;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
   }
-
+  
   nav ul a {
     font-size: 1rem;
+  }
+  
+  /* Pas d'overlay sur desktop */
+  .menu-overlay {
+    display: none;
   }
 }
