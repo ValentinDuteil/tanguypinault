@@ -24,21 +24,22 @@ nav {
 
 /* Menu caché par défaut sur mobile */
 nav ul {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 70%;
-  height: 100vh;
-  background: rgba(26, 26, 26, 0.95);
-  backdrop-filter: blur(10px);
-  border-left: 1px solid var(--gold);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  transition: right 0.3s ease;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-left: 2px solid transparent; /* Transparent pour l'effet */
+    border-image: linear-gradient(to bottom, transparent, var(--gold) 20%, var(--gold) 80%, transparent) 1; /* Dégradé vertical */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transition: right 0.3s ease;
+    z-index: 1000;
 }
 
 nav ul a {

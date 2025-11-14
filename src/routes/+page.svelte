@@ -150,14 +150,13 @@ onMount(() => {
         
         <button type="submit" class="submit-btn">Envoyer</button>
     </form>
-    <button class="scroll-top" onclick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>🢕</button>
 </section>
 </main>
 
+<div class="section-divider"></div>
+
 <footer>
-	<h4>Instagram</h4>
-	<img class="instagram_logo" src="" alt="" />
-	<p>© 2025 Tanguy Pinault</p>
+    <p>© 2025 Tanguy Pinault</p>
 </footer>
 
 <style>

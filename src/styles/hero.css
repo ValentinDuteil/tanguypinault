@@ -6,12 +6,14 @@
     align-items: center;
     background: var(--dark);
     text-align: center;
-    padding: 2rem;
+    padding: 1rem 2rem 4rem 2rem;
 }
 
 #hero h1 {
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 1rem;
+    line-height: 1.1;
+    max-width: 90%;
 }
 
 #hero p {
@@ -22,15 +24,19 @@
 
 /* Tablette */
 @media (min-width: 768px) {
-
-    #hero h2 {
-        font-size: 5rem;
+    #hero h1 {
+        font-size: 6rem;
+        max-width: 100%;
     }
 
     #hero p {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 }
 
 /* Desktop */
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+    #hero h1 {
+        font-size: 8rem;
+    }
+}

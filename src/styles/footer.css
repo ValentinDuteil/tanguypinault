@@ -1,8 +1,6 @@
-/* Mobile First */
 footer {
-    min-height: 2rem;
+    min-height: auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: var(--dark);
@@ -13,18 +11,11 @@ footer {
 footer p {
     font-size: 0.875rem;
     color: var(--grey);
+    margin: 0;
 }
 
-/* Tablette */
 @media (min-width: 768px) {
     footer p {
-        font-size: 0.875rem;
-    }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-    footer h4 {
-        font-size: 20px;
+        font-size: 1rem;
     }
 }
