@@ -31,9 +31,32 @@
 		}
 	}
 
+    // Convertir les noms de couleurs en valeurs CSS
+function getColorVar(colorName) {
+	const colorMap = {
+		'dark': 'var(--dark)',
+		'grey': 'var(--grey)',
+		'beige': 'var(--beige-medium)',
+		'beige-light': 'var(--beige-light)',
+		'gold': 'var(--gold)'
+	};
+	return colorMap[colorName] || 'var(--beige-light)';
+}
+
 	// Smooth scroll (déjà présent)
 	onMount(() => {
-        fetchHero();
+		fetchHero();
+
+		// Gestion du scroll pour la nav
+		window.addEventListener('scroll', () => {
+			const header = document.querySelector('header');
+			if (window.scrollY > 100) {
+				header.classList.add('scrolled');
+			} else {
+				header.classList.remove('scrolled');
+			}
+		});
+		//Gestion du scroll pour le portfolio
 		const links = document.querySelectorAll('a[href^="#"]');
 
 		links.forEach((link) => {
@@ -87,10 +110,29 @@
 <div class="menu-overlay" class:active={menuOpen} onclick={toggleMenu}></div>
 
 <main>
-	<section id="hero">
-		<h1>Pinault Tanguy</h1>
-		<p>Artiste Plasticien & Maskmaker</p>
-	</section>
+	<section id="hero" style="--hero-text-color: {heroData ? `var(--${heroData.hero_text_color})` : 'var(--beige-light)'};">
+	{#if heroData}
+		{#if heroData.media_type === 'image' && heroData.image}
+			<img 
+				class="hero-background" 
+				src="http://127.0.0.1:8090/api/files/{heroData.collectionId}/{heroData.id}/{heroData.image}" 
+				alt="Hero background"
+				style="object-position: {heroData.image_position || 'center'};"
+			/>
+		{:else if heroData.media_type === 'video' && heroData.video}
+			<video class="hero-background" autoplay muted loop playsinline>
+				<source src="http://127.0.0.1:8090/api/files/{heroData.collectionId}/{heroData.id}/{heroData.video}" type="video/mp4">
+			</video>
+		{/if}
+		
+		<div class="hero-content">
+			<h1>{heroData.title}</h1>
+			<p>{heroData.subtitle}</p>
+		</div>
+	{:else}
+		<h1>Chargement...</h1>
+	{/if}
+    </section>
 
 	<section id="profile">
 		<h2>Présentation</h2>

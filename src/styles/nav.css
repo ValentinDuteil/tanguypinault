@@ -1,10 +1,16 @@
 /* Header mobile first */
 header {
-  position: static;
+  position: fixed;
   top: 0;
   width: 100%;
-  background: var(--dark);
+  background-color: rgba(26, 26, 26, 0);
   padding: 1rem;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+header.scrolled {
+  background-color: rgba(26, 26, 26, 0.95);
 }
 
 nav {
@@ -15,37 +21,59 @@ nav {
 .burger {
   background: none;
   border: none;
-  color: var(--beige-light);
+  color: var(--nav-color, var(--beige-light));
   font-size: 2rem;
   cursor: pointer;
   position: relative;
-  z-index: 1001;
+  z-index: 1002;
+  transition: all 0.3s ease;
+}
+
+.burger:hover {
+  color: var(--nav-hover-color, var(--gold));
+  text-shadow: 0 0 15px var(--nav-hover-color, var(--gold));
+  transform: translateY(-2px);
 }
 
 /* Menu caché par défaut sur mobile */
 nav ul {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    height: 100vh;
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    border-left: 2px solid transparent; /* Transparent pour l'effet */
-    border-image: linear-gradient(to bottom, transparent, var(--gold) 20%, var(--gold) 80%, transparent) 1; /* Dégradé vertical */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    transition: right 0.3s ease;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(10px);
+  border-left: 2px solid transparent;
+  border-image: linear-gradient(to bottom, transparent, var(--gold) 20%, var(--gold) 80%, transparent) 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transition: right 0.3s ease;
+  z-index: 1001;
+}
+
+nav ul li {
+  position: relative;
+  z-index: 1001;
 }
 
 nav ul a {
-  color: var(--beige-light);
+  color: var(--nav-color, var(--beige-light));
   text-decoration: none;
   font-size: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto
+}
+
+nav ul a:hover {
+  color: var(--gold);
+  text-shadow: 0 0 15px var(--gold);
+  transform: translateY(-2px);
 }
 
 nav ul.open {
@@ -63,7 +91,7 @@ nav ul.open {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 999;
+  z-index: 998;
 }
 
 .menu-overlay.active {
@@ -76,7 +104,7 @@ nav ul.open {
   .burger {
     display: none;
   }
-  
+
   nav ul {
     position: static;
     width: auto;
@@ -87,12 +115,19 @@ nav ul.open {
     border: none;
     backdrop-filter: none;
   }
-  
+
   nav ul a {
+    color: var(--nav-color, var(--beige-light));
     font-size: 1rem;
+    transition: all 0.3s ease;
   }
-  
-  /* Pas d'overlay sur desktop */
+
+  nav ul a:hover {
+    color: var(--nav-hover-color, var(--gold));
+    text-shadow: 0 0 15px var(--nav-hover-color, var(--gold));
+    transform: translateY(-2px);
+  }
+
   .menu-overlay {
     display: none;
   }
