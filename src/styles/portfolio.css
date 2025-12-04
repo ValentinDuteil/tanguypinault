@@ -69,6 +69,7 @@
 
 .portfolio-item:hover {
     transform: scale(1.05);
+    animation: pulse-shadow 5s infinite;
 }
 
 /* Items vides ou avec texte : animation douce des cadres */
@@ -345,6 +346,8 @@
     border: 1px solid var(--gold);
     cursor: pointer;
     animation: scaleIn 0.3s ease-in-out;
+    padding: 2px;
+    background: transparent;
 }
 
 /* Images et vidéos dans l'overlay - jamais croppées */
@@ -352,10 +355,15 @@
 .overlay-content video {
     width: 100%;
     height: 100%;
-    max-width: calc(95vw - 4px);
-    max-height: calc(95vh - 4px);
-    object-fit: contain; /* Garde l'image entière sans crop */
+    max-width: calc(95vw - 6px);
+    max-height: calc(95vh - 6px);
+    object-fit: contain;
     display: block;
+}
+
+/* Pour les vidéos, laisser de la place pour les contrôles */
+.overlay-content video {
+    max-height: calc(95vh - 60px);
 }
 
 /* Texte dans l'overlay */
