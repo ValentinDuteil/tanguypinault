@@ -46,6 +46,51 @@
 		}
 	}
 
+	// Ouvrir l'overlay avec le contenu
+	function openOverlay(item) {
+		const overlay = document.getElementById('portfolioOverlay');
+		const container = document.getElementById('overlayContentContainer');
+
+		// Vider le contenu précédent
+		container.innerHTML = '';
+
+		// Ajouter le contenu selon le type
+		if (item.content_type === 'image' && item.image) {
+			const img = document.createElement('img');
+			img.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.image}`;
+			img.alt = item.title || '';
+			img.style.objectPosition = item.crop_position || 'center';
+			container.appendChild(img);
+		} else if (item.content_type === 'video' && item.video) {
+			const video = document.createElement('video');
+			video.controls = true;
+			video.autoplay = true;
+			const source = document.createElement('source');
+			source.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.video}`;
+			source.type = 'video/mp4';
+			video.appendChild(source);
+			container.appendChild(video);
+		} else if (item.content_type === 'text') {
+			const textDiv = document.createElement('div');
+			textDiv.className = 'text-content';
+			textDiv.innerHTML = item.text_content;
+			container.appendChild(textDiv);
+		}
+
+		// Afficher l'overlay
+		overlay.classList.add('active');
+	}
+
+	// Fermer l'overlay
+	function closeOverlay() {
+		const overlay = document.getElementById('portfolioOverlay');
+		overlay.classList.remove('active');
+
+		// Arrêter les vidéos
+		const videos = overlay.querySelectorAll('video');
+		videos.forEach((video) => video.pause());
+	}
+
 	// Convertir les noms de couleurs en valeurs CSS
 	function getColorVar(colorName) {
 		const colorMap = {
@@ -167,7 +212,13 @@
 
 		<div class="portfolio-grid" class:show-positions={showPositions}>
 			<!-- Items 1-17 : Desktop + Tablette -->
-			<div class="portfolio-item desktop-tablet item-1">
+			<div
+				class="portfolio-item desktop-tablet item-1"
+				onclick={() => {
+					const item = portfolioItems.find((i) => i.order === 1);
+					if (item) openOverlay(item);
+				}}
+			>
 				<span class="position-label">#1 - Tab:C / Desk:E</span>
 				{#if portfolioItems.find((item) => item.order === 1)}
 					{@const item = portfolioItems.find((item) => item.order === 1)}
@@ -893,6 +944,13 @@
 			>🢕</button
 		>
 	</section>
+
+	<!-- Overlay pour agrandissement -->
+	<div class="portfolio-overlay" id="portfolioOverlay" onclick={closeOverlay}>
+		<div class="overlay-content" onclick={closeOverlay}>
+			<div id="overlayContentContainer"></div>
+		</div>
+	</div>
 
 	<section id="course">
 		<h2>Parcours</h2>
