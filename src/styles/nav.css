@@ -1,16 +1,12 @@
 /* Header mobile first */
 header {
-  position: fixed;
+  position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
-  background-color: rgba(26, 26, 26, 0);
+  background: transparent;
   padding: 1rem;
   z-index: 1000;
-  transition: background-color 0.3s ease;
-}
-
-header.scrolled {
-  background-color: rgba(26, 26, 26, 0.95);
 }
 
 nav {
