@@ -16,6 +16,8 @@
 	let heroData = null;
 	let portfolioItems = [];
 	let showPositions = false;
+	let showToggleButton = false;
+	let presentationData = null;
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
@@ -29,6 +31,17 @@
 			}
 		} catch (error) {
 			console.error('Erreur hero:', error);
+		}
+	}
+
+	async function fetchPresentation() {
+		try {
+			const records = await pb.collection('presentation').getList(1, 1);
+			if (records.items.length > 0) {
+				presentationData = records.items[0];
+			}
+		} catch (error) {
+			console.error('Erreur présentation:', error);
 		}
 	}
 
@@ -86,6 +99,15 @@
 	onMount(() => {
 		fetchHero();
 		fetchPortfolio();
+		fetchPresentation();
+
+		// Raccourci clavier Ctrl+Shift+P pour afficher/masquer le toggle
+		window.addEventListener('keydown', (e) => {
+			if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+				showToggleButton = !showToggleButton;
+				console.log('Toggle button:', showToggleButton ? 'visible' : 'caché');
+			}
+		});
 
 		const links = document.querySelectorAll('a[href^="#"]');
 
@@ -170,9 +192,15 @@
 		{/if}
 	</section>
 
-	<section id="profile">
+	<section id="profile" style="color: var(--{presentationData?.text_color || 'dark'});">
 		<h2>Présentation</h2>
-		<p>lorem ipsum niezOFH B HUHEZui efjze uiifhze e jibfhkz uihfui z nnjihui</p>
+		{#if presentationData}
+			<div class="presentation-content">
+				{@html presentationData.content}
+			</div>
+		{:else}
+			<p>Chargement...</p>
+		{/if}
 		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
 			🢕
 		</button>
@@ -181,9 +209,11 @@
 	<section id="portfolio">
 		<h2>Portfolio</h2>
 
-		<button class="preview-toggle" onclick={() => (showPositions = !showPositions)}>
-			{showPositions ? '🔒 Masquer numéros' : '👁️ Voir numéros'}
-		</button>
+		{#if showToggleButton}
+			<button class="preview-toggle" onclick={() => (showPositions = !showPositions)}>
+				{showPositions ? '🔒 Masquer numéros' : '👁️ Voir numéros'}
+			</button>
+		{/if}
 
 		<div class="portfolio-grid" class:show-positions={showPositions}>
 			<!-- Desktop & Tablet (positions 1-17) -->

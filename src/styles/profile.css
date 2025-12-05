@@ -3,35 +3,71 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background: var(--beige-light);
     text-align: center;
-    padding: 2rem;
+    padding: 4rem 2rem;
 }
 
 #profile h2 {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: var(--dark);
 }
 
-#profile p {
-    font-size: 1.2rem;
+.presentation-content {
+    max-width: 800px;
+    margin: auto 0;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.presentation-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
     color: var(--grey);
+}
+
+.presentation-content strong {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.presentation-content em {
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--grey);
+}
+
+/* Réduire automatiquement les citations */
+.presentation-content blockquote,
+.presentation-content em {
+    font-size: 0.95em;
 }
 
 /* Tablette */
 @media (min-width: 768px) {
-
     #profile h2 {
         font-size: 5rem;
     }
 
-    #profile p {
-        font-size: 1.5rem;
+    .presentation-content {
+        max-width: 900px;
+    }
+
+    .presentation-content p {
+        font-size: 1.2rem;
     }
 }
 
 /* Desktop */
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+    .presentation-content {
+        max-width: 1000px;
+    }
+
+    .presentation-content p {
+        font-size: 1.3rem;
+    }
+}
