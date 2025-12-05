@@ -23,27 +23,53 @@
     line-height: 1.8;
 }
 
+/* H3 = Titre principal (MASK MAKERS) */
+.presentation-content h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+/* H4 = Sous-titre ou introduction */
+.presentation-content h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--grey);
+    margin-bottom: 1rem;
+}
+
+/* H5 = Citation (plus petite) */
+.presentation-content h5 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--grey);
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+/* H5 = Citation (plus petite) */
+.presentation-content h6 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--grey);
+    margin: 1rem 0;
+    line-height: 1.6;
+    }
+
+/* Paragraphes normaux */
 .presentation-content p {
     margin-bottom: 1.5rem;
     font-size: 1rem;
     color: var(--grey);
+    line-height: 1.8;
 }
 
+/* Texte en gras */
 .presentation-content strong {
     font-weight: 600;
     color: var(--dark);
-}
-
-.presentation-content em {
-    font-style: italic;
-    font-size: 0.9em;
-    color: var(--grey);
-}
-
-/* Réduire automatiquement les citations */
-.presentation-content blockquote,
-.presentation-content em {
-    font-size: 0.95em;
 }
 
 /* Tablette */
@@ -56,8 +82,24 @@
         max-width: 900px;
     }
 
+    .presentation-content h3 {
+        font-size: 2rem;
+    }
+
+    .presentation-content h4 {
+        font-size: 1.5rem;
+    }
+
     .presentation-content p {
         font-size: 1.2rem;
+    }
+
+    .presentation-content h5 {
+        font-size: 1rem;
+    }
+
+    .presentation-content h6 {
+        font-size: 0.9rem;
     }
 }
 
@@ -67,7 +109,23 @@
         max-width: 1000px;
     }
 
+    .presentation-content h3 {
+        font-size: 2.2rem;
+    }
+
+    .presentation-content h4 {
+        font-size: 1.6rem;
+    }
+
     .presentation-content p {
         font-size: 1.3rem;
+    }
+
+    .presentation-content h5 {
+        font-size: 1.1rem;
+    }
+
+    .presentation-content h6 {
+        font-size: 1rem;
     }
 }
