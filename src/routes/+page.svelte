@@ -18,6 +18,9 @@
 	let showPositions = false;
 	let showToggleButton = false;
 	let presentationData = null;
+	let expositions = [];
+	let publications = [];
+	let formations = [];
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
@@ -54,6 +57,42 @@
 			console.log('Portfolio items:', portfolioItems);
 		} catch (error) {
 			console.error('Erreur portfolio:', error);
+		}
+	}
+
+	async function fetchExpositions() {
+		try {
+			const records = await pb.collection('expositions').getList(1, 100, {
+				sort: '-year'
+			});
+			expositions = records.items;
+			console.log('Expositions:', expositions);
+		} catch (error) {
+			console.error('Erreur expositions:', error);
+		}
+	}
+
+	async function fetchPublications() {
+		try {
+			const records = await pb.collection('publications').getList(1, 100, {
+				sort: '-year'
+			});
+			publications = records.items;
+			console.log('Publications:', publications);
+		} catch (error) {
+			console.error('Erreur publications:', error);
+		}
+	}
+
+	async function fetchFormations() {
+		try {
+			const records = await pb.collection('formations').getList(1, 100, {
+				sort: '-year'
+			});
+			formations = records.items;
+			console.log('Formations:', formations);
+		} catch (error) {
+			console.error('Erreur formations:', error);
 		}
 	}
 
@@ -100,6 +139,9 @@
 		fetchHero();
 		fetchPortfolio();
 		fetchPresentation();
+		fetchExpositions();
+		fetchPublications();
+		fetchFormations();
 
 		// Raccourci clavier Ctrl+Shift+P pour afficher/masquer le toggle
 		window.addEventListener('keydown', (e) => {
@@ -355,6 +397,132 @@
 
 	<section id="course">
 		<h2>Parcours</h2>
+
+		<!-- EXPOSITIONS -->
+		<div class="expositions-section">
+			<h3>Expositions</h3>
+
+			{#if expositions.filter((e) => e.type === 'collective').length > 0}
+				<h4>Expositions Collectives</h4>
+				{#each expositions.filter((e) => e.type === 'collective') as expo}
+					<div class="course-item">
+						<span class="year">{expo.year}</span>
+						<span class="title">{expo.title}</span>
+						{#if expo.venue}
+							<span class="venue">{expo.venue}</span>
+						{/if}
+						<span class="location">{expo.location}</span>
+					</div>
+				{/each}
+			{/if}
+
+			{#if expositions.filter((e) => e.type === 'personnelle').length > 0}
+				<h4>Expositions Personnelles</h4>
+				{#each expositions.filter((e) => e.type === 'personnelle') as expo}
+					<div class="course-item">
+						<span class="year">{expo.year}</span>
+						<span class="title">{expo.title}</span>
+						{#if expo.venue}
+							<span class="venue">{expo.venue}</span>
+						{/if}
+						<span class="location">{expo.location}</span>
+					</div>
+				{/each}
+			{/if}
+
+			{#if expositions.filter((e) => e.type === 'performance').length > 0}
+				<h4>Performances</h4>
+				{#each expositions.filter((e) => e.type === 'performance') as expo}
+					<div class="course-item">
+						<span class="year">{expo.year}</span>
+						<span class="title">{expo.title}</span>
+						{#if expo.venue}
+							<span class="venue">{expo.venue}</span>
+						{/if}
+						<span class="location">{expo.location}</span>
+					</div>
+				{/each}
+			{/if}
+		</div>
+
+		<!-- SÉPARATEUR -->
+		<div class="course-divider">
+			<span class="course-divider-symbol">◆</span>
+		</div>
+
+		<!-- COLONNES -->
+		<div class="course-columns">
+			<!-- PUBLICATIONS -->
+			<div class="publications-column">
+				<h3>Publications</h3>
+
+				{#if publications.filter((p) => p.type === 'presse').length > 0}
+					<h4>Presse</h4>
+					{#each publications.filter((p) => p.type === 'presse') as pub}
+						<div class="course-item">
+							<span class="year">{pub.year}</span>
+							<span class="title">{pub.title}</span>
+							<span class="source">{pub.source}</span>
+							{#if pub.link}
+								<a href={pub.link} target="_blank" rel="noopener noreferrer">Lire l'article →</a>
+							{/if}
+						</div>
+					{/each}
+				{/if}
+
+				{#if publications.filter((p) => p.type === 'fanzine').length > 0}
+					<h4>Fanzines</h4>
+					{#each publications.filter((p) => p.type === 'fanzine') as pub}
+						<div class="course-item">
+							<span class="year">{pub.year}</span>
+							<span class="title">{pub.title}</span>
+							<span class="source">{pub.source}</span>
+							{#if pub.link}
+								<a href={pub.link} target="_blank" rel="noopener noreferrer">Voir →</a>
+							{/if}
+						</div>
+					{/each}
+				{/if}
+
+				{#if publications.filter((p) => p.type === 'podcast').length > 0}
+					<h4>Podcasts</h4>
+					{#each publications.filter((p) => p.type === 'podcast') as pub}
+						<div class="course-item">
+							<span class="year">{pub.year}</span>
+							<span class="title">{pub.title}</span>
+							<span class="source">{pub.source}</span>
+							{#if pub.link}
+								<a href={pub.link} target="_blank" rel="noopener noreferrer">Écouter →</a>
+							{/if}
+						</div>
+					{/each}
+				{/if}
+			</div>
+
+			<!-- SÉPARATEUR MOBILE -->
+			<div class="mobile-divider">
+				<span class="mobile-divider-symbol">◆</span>
+			</div>
+
+			<!-- FORMATIONS -->
+			<div class="formations-column">
+				<h3>Formations</h3>
+				{#each formations as formation}
+					<div class="formation-item">
+						<span class="year">{formation.year}</span>
+						<span class="school">{formation.school}</span>
+						{#if formation.diploma}
+							<span class="diploma">{formation.diploma}</span>
+						{/if}
+						{#if formation.speciality}
+							<span class="speciality">{formation.speciality}</span>
+						{/if}
+						<span class="location">{formation.location}</span>
+					</div>
+				{/each}
+			</div>
+		</div>
+
 		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
 			🢕
 		</button>

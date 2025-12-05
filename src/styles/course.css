@@ -1,37 +1,339 @@
-/* Mobile First */
+/* ============================================
+   PARCOURS
+   Organisation : Base → Mobile → Tablet → Desktop
+   ============================================ */
+
+/* === BASE === */
+
 #course {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: var(--beige-light);
     text-align: center;
-    padding: 4rem 2rem 1rem 2rem;
+    padding: 4rem 2rem;
 }
 
 #course h2 {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     color: var(--dark);
 }
 
-#course p {
+/* === TITRES === */
+
+#course h3 {
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+#course h4 {
     font-size: 1.2rem;
+    color: var(--dark);
+    margin: 2.5rem 0 1.5rem 0;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* === EXPOSITIONS === */
+
+.expositions-section {
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
+    width: 100%;
+    text-align: left;
+}
+
+/* === ITEMS === */
+
+.course-item {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--beige-medium);
+    transition: border-color 0.3s ease;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.course-item:hover {
+    border-left-color: var(--gold);
+}
+
+.course-item .year {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.course-item .year::after {
+    content: ' |';
+    color: var(--beige-medium);
+    margin-left: 0.3rem;
+}
+
+.course-item .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.course-item .title::after {
+    content: ',';
+    color: var(--grey);
+    margin-right: 0.3rem;
+}
+
+.course-item .location,
+.course-item .venue,
+.course-item .source {
+    font-size: 0.95rem;
     color: var(--grey);
 }
 
-/* Tablette */
-@media (min-width: 768px) {
+.course-item .venue::after {
+    content: ',';
+    margin-right: 0.3rem;
+}
 
+.course-item a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.course-item a:hover {
+    color: var(--dark);
+    text-decoration: underline;
+}
+
+/* === FORMATIONS === */
+
+.formation-item {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--beige-medium);
+    transition: border-color 0.3s ease;
+}
+
+.formation-item:hover {
+    border-left-color: var(--gold);
+}
+
+.formation-item .year {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.formation-item .school {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+    display: block;
+}
+
+.formation-item .diploma,
+.formation-item .speciality {
+    font-size: 0.95rem;
+    color: var(--grey);
+    display: block;
+}
+
+.formation-item .location {
+    font-size: 0.9rem;
+    color: var(--grey);
+    display: block;
+    margin-top: 0.3rem;
+}
+
+/* === SÉPARATEUR PRINCIPAL === */
+
+.course-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0;
+    position: relative;
+}
+
+.course-divider::before,
+.course-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.course-divider-symbol {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin: 0 1.5rem;
+    filter: drop-shadow(0 0 8px rgba(184, 149, 106, 0.6));
+}
+
+/* === SÉPARATEUR MOBILE === */
+
+.mobile-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0;
+    position: relative;
+    order: 2;
+}
+
+.mobile-divider::before,
+.mobile-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.mobile-divider-symbol {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin: 0 1.5rem;
+    filter: drop-shadow(0 0 8px rgba(184, 149, 106, 0.6));
+}
+
+/* === COLONNES === */
+
+.course-columns {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
+    width: 100%;
+}
+
+.publications-column {
+    text-align: left;
+    order: 1;
+}
+
+.formations-column {
+    text-align: left;
+    order: 3;
+}
+
+/* Réduction des tailles dans les colonnes */
+.publications-column .course-item .year,
+.formations-column .formation-item .year {
+    font-size: 1.1rem;
+}
+
+.publications-column .course-item .title,
+.formations-column .formation-item .school {
+    font-size: 1rem;
+}
+
+.publications-column .course-item .source,
+.formations-column .formation-item .diploma,
+.formations-column .formation-item .speciality,
+.formations-column .formation-item .location {
+    font-size: 0.85rem;
+}
+
+/* === TABLET (768px - 1023px) === */
+
+@media (min-width: 768px) {
     #course h2 {
         font-size: 5rem;
     }
 
-    #course p {
+    #course h3 {
+        font-size: 2rem;
+    }
+
+    #course h4 {
+        font-size: 1.4rem;
+    }
+
+    .course-item .year {
         font-size: 1.5rem;
+    }
+
+    .course-item .title {
+        font-size: 1.2rem;
+    }
+
+    /* Masquer séparateur mobile */
+    .mobile-divider {
+        display: none;
+    }
+
+    /* Colonnes côte à côte */
+    .course-columns {
+        flex-direction: row;
+        gap: 4rem;
+        position: relative;
+    }
+
+    .course-columns::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+        transform: translateX(-50%);
+    }
+
+    .publications-column,
+    .formations-column {
+        flex: 1;
+        order: unset;
+    }
+
+    .publications-column .course-item .year,
+    .formations-column .formation-item .year {
+        font-size: 1.2rem;
+    }
+
+    .publications-column .course-item .title,
+    .formations-column .formation-item .school {
+        font-size: 1.05rem;
     }
 }
 
-/* Desktop */
-@media (min-width: 1024px) {}
+/* === DESKTOP (>= 1024px) === */
+
+@media (min-width: 1024px) {
+    .expositions-section {
+        max-width: 1400px;
+    }
+
+    .course-columns {
+        max-width: 1400px;
+    }
+
+    .course-item .year {
+        font-size: 1.6rem;
+    }
+
+    .course-item .title {
+        font-size: 1.3rem;
+    }
+
+    .publications-column .course-item .year,
+    .formations-column .formation-item .year {
+        font-size: 1.3rem;
+    }
+
+    .publications-column .course-item .title,
+    .formations-column .formation-item .school {
+        font-size: 1.1rem;
+    }
+}
