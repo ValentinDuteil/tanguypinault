@@ -21,7 +21,6 @@
 		menuOpen = !menuOpen;
 	}
 
-	// Récupérer le hero depuis PocketBase
 	async function fetchHero() {
 		try {
 			const records = await pb.collection('hero').getList(1, 1);
@@ -33,7 +32,6 @@
 		}
 	}
 
-	// Récupérer le portfolio depuis PocketBase
 	async function fetchPortfolio() {
 		try {
 			const records = await pb.collection('portfolio_items').getList(1, 50, {
@@ -46,15 +44,12 @@
 		}
 	}
 
-	// Ouvrir l'overlay avec le contenu
 	function openOverlay(item) {
 		const overlay = document.getElementById('portfolioOverlay');
 		const container = document.getElementById('overlayContentContainer');
 
-		// Vider le contenu précédent
 		container.innerHTML = '';
 
-		// Ajouter le contenu selon le type
 		if (item.content_type === 'image' && item.image) {
 			const img = document.createElement('img');
 			img.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.image}`;
@@ -77,38 +72,21 @@
 			container.appendChild(textDiv);
 		}
 
-		// Afficher l'overlay
 		overlay.classList.add('active');
 	}
 
-	// Fermer l'overlay
 	function closeOverlay() {
 		const overlay = document.getElementById('portfolioOverlay');
 		overlay.classList.remove('active');
 
-		// Arrêter les vidéos
 		const videos = overlay.querySelectorAll('video');
 		videos.forEach((video) => video.pause());
 	}
 
-	// Convertir les noms de couleurs en valeurs CSS
-	function getColorVar(colorName) {
-		const colorMap = {
-			dark: 'var(--dark)',
-			grey: 'var(--grey)',
-			beige: 'var(--beige-medium)',
-			'beige-light': 'var(--beige-light)',
-			gold: 'var(--gold)'
-		};
-		return colorMap[colorName] || 'var(--beige-light)';
-	}
-
-	// Smooth scroll (déjà présent)
 	onMount(() => {
 		fetchHero();
 		fetchPortfolio();
 
-		//Gestion du scroll pour le portfolio
 		const links = document.querySelectorAll('a[href^="#"]');
 
 		links.forEach((link) => {
@@ -127,7 +105,6 @@
 			});
 		});
 
-		// Animation au scroll pour portfolio items
 		const observerOptions = {
 			threshold: 0.1,
 			rootMargin: '0px 0px -50px 0px'
@@ -141,7 +118,6 @@
 			});
 		}, observerOptions);
 
-		// Observer tous les items portfolio
 		const portfolioItems = document.querySelectorAll('.portfolio-item');
 		portfolioItems.forEach((item) => observer.observe(item));
 	});
@@ -197,118 +173,150 @@
 	<section id="profile">
 		<h2>Présentation</h2>
 		<p>lorem ipsum niezOFH B HUHEZui efjze uiifhze e jibfhkz uihfui z nnjihui</p>
-		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-			>🢕</button
-		>
+		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+			🢕
+		</button>
 	</section>
 
 	<section id="portfolio">
-	<h2>Portfolio</h2>
+		<h2>Portfolio</h2>
 
-	<!-- Bouton toggle pour Tanguy -->
-	<button class="preview-toggle" onclick={() => (showPositions = !showPositions)}>
-		{showPositions ? '🔒 Masquer numéros' : '👁️ Voir numéros'}
-	</button>
+		<button class="preview-toggle" onclick={() => (showPositions = !showPositions)}>
+			{showPositions ? '🔒 Masquer numéros' : '👁️ Voir numéros'}
+		</button>
 
-	<div class="portfolio-grid" class:show-positions={showPositions}>
-		<!-- Items 1-17 : Desktop + Tablette -->
-		{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] as orderNum}
-			{@const item = portfolioItems.find((i) => i.order === orderNum)}
-			{@const sizeLabels = {
-				1: 'Tab:C / Desk:E', 2: 'Tab:B / Desk:C', 3: 'Tab:D / Desk:B', 4: 'Tab:E / Desk:D',
-				5: 'Tab:C / Desk:D', 6: 'Tab:B / Desk:C', 7: 'Tab:D / Desk:B', 8: 'Tab:D / Desk:C',
-				9: 'Tab:C / Desk:C', 10: 'Tab:E / Desk:—', 11: 'Tab:D / Desk:B', 12: 'Tab:C / Desk:D',
-				13: 'Tab:B / Desk:D', 14: 'Tab:C / Desk:C', 15: 'Tab:E / Desk:B', 16: 'Tab:B / Desk:C',
-				17: 'Tab:C / Desk:E'
-			}}
-			<div
-				class="portfolio-item desktop-tablet item-{orderNum}"
-				role="button"
-				tabindex="0"
-				onclick={() => item && openOverlay(item)}
-				onkeydown={(e) => {
-					if ((e.key === 'Enter' || e.key === ' ') && item) {
-						e.preventDefault();
-						openOverlay(item);
-					}
+		<div class="portfolio-grid" class:show-positions={showPositions}>
+			<!-- Desktop & Tablet (positions 1-17) -->
+			{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] as orderNum}
+				{@const sizeLabels = {
+					1: 'Tab:C / Desk:E',
+					2: 'Tab:B / Desk:C',
+					3: 'Tab:D / Desk:B',
+					4: 'Tab:E / Desk:D',
+					5: 'Tab:C / Desk:D',
+					6: 'Tab:B / Desk:C',
+					7: 'Tab:D / Desk:B',
+					8: 'Tab:D / Desk:C',
+					9: 'Tab:C / Desk:C',
+					10: 'Tab:E / Desk:—',
+					11: 'Tab:D / Desk:B',
+					12: 'Tab:C / Desk:D',
+					13: 'Tab:B / Desk:D',
+					14: 'Tab:C / Desk:C',
+					15: 'Tab:E / Desk:B',
+					16: 'Tab:B / Desk:C',
+					17: 'Tab:C / Desk:E'
 				}}
-			>
-				<span class="position-label">#{orderNum} - {sizeLabels[orderNum]}</span>
-				{#if item}
-					{#if item.content_type === 'image' && item.image}
-						<img
-							src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
-							alt={item.title}
-							style="object-position: {item.crop_position || 'center'};"
-						/>
-					{:else if item.content_type === 'video' && item.video}
-						<video autoplay muted loop playsinline>
-							<source
-								src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.video}"
-								type="video/mp4"
-							/>
-						</video>
-					{:else if item.content_type === 'text'}
-						<div class="text-content">{@html item.text_content}</div>
-					{/if}
-				{:else}
-					{orderNum}
-				{/if}
-			</div>
-		{/each}
+				{#each ['desktop', 'tablet'] as breakpoint}
+					{@const item = portfolioItems.find((i) => {
+						if (i.order !== orderNum) return false;
+						if (!i.breakpoints) return false;
+						const bps = Array.isArray(i.breakpoints) ? i.breakpoints : [i.breakpoints];
+						return bps.includes(breakpoint);
+					})}
+					<div
+						class="portfolio-item {breakpoint}-only item-{orderNum}"
+						role="button"
+						tabindex="0"
+						onclick={() => item && openOverlay(item)}
+						onkeydown={(e) => {
+							if ((e.key === 'Enter' || e.key === ' ') && item) {
+								e.preventDefault();
+								openOverlay(item);
+							}
+						}}
+					>
+						<span class="position-label">#{orderNum} - {sizeLabels[orderNum]}</span>
+						{#if item}
+							{#if item.content_type === 'image' && item.image}
+								<img
+									src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
+									alt={item.title}
+									style="object-position: {item.crop_position || 'center'};"
+								/>
+							{:else if item.content_type === 'video' && item.video}
+								<video autoplay muted loop playsinline>
+									<source
+										src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.video}"
+										type="video/mp4"
+									/>
+								</video>
+							{:else if item.content_type === 'text'}
+								<div class="text-content">{@html item.text_content}</div>
+							{/if}
+						{:else}
+							{orderNum}
+						{/if}
+					</div>
+				{/each}
+			{/each}
 
-		<!-- Items 18-31 : Mobile uniquement -->
-		{#each [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] as orderNum}
-			{@const item = portfolioItems.find((i) => i.order === orderNum)}
-			{@const sizeLabels = {
-				18: 'Mob:C', 19: 'Mob:B', 20: 'Mob:A', 21: 'Mob:A', 22: 'Mob:C', 23: 'Mob:A',
-				24: 'Mob:A', 25: 'Mob:A', 26: 'Mob:A', 27: 'Mob:C', 28: 'Mob:A', 29: 'Mob:A',
-				30: 'Mob:B', 31: 'Mob:C'
-			}}
-			{@const mobileNum = orderNum - 17}
-			<div
-				class="portfolio-item mobile-only item-{orderNum}"
-				role="button"
-				tabindex="0"
-				onclick={() => item && openOverlay(item)}
-				onkeydown={(e) => {
-					if ((e.key === 'Enter' || e.key === ' ') && item) {
-						e.preventDefault();
-						openOverlay(item);
-					}
+			<!-- Mobile (positions M1-M14 = order 1-14) -->
+			{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] as orderNum}
+				{@const sizeLabels = {
+					1: 'Mob:C',
+					2: 'Mob:B',
+					3: 'Mob:A',
+					4: 'Mob:A',
+					5: 'Mob:C',
+					6: 'Mob:A',
+					7: 'Mob:A',
+					8: 'Mob:A',
+					9: 'Mob:A',
+					10: 'Mob:C',
+					11: 'Mob:A',
+					12: 'Mob:A',
+					13: 'Mob:B',
+					14: 'Mob:C'
 				}}
-			>
-				<span class="position-label">#M{mobileNum} - {sizeLabels[orderNum]}</span>
-				{#if item}
-					{#if item.content_type === 'image' && item.image}
-						<img
-							src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
-							alt={item.title}
-							style="object-position: {item.crop_position || 'center'};"
-						/>
-					{:else if item.content_type === 'video' && item.video}
-						<video autoplay muted loop playsinline>
-							<source
-								src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.video}"
-								type="video/mp4"
+				{@const item = portfolioItems.find((i) => {
+					if (i.order !== orderNum) return false;
+					if (!i.breakpoints) return false;
+					const bps = Array.isArray(i.breakpoints) ? i.breakpoints : [i.breakpoints];
+					return bps.includes('mobile');
+				})}
+				<div
+					class="portfolio-item mobile-only item-{orderNum}"
+					role="button"
+					tabindex="0"
+					onclick={() => item && openOverlay(item)}
+					onkeydown={(e) => {
+						if ((e.key === 'Enter' || e.key === ' ') && item) {
+							e.preventDefault();
+							openOverlay(item);
+						}
+					}}
+				>
+					<span class="position-label">#M{orderNum} - {sizeLabels[orderNum]}</span>
+					{#if item}
+						{#if item.content_type === 'image' && item.image}
+							<img
+								src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
+								alt={item.title}
+								style="object-position: {item.crop_position || 'center'};"
 							/>
-						</video>
-					{:else if item.content_type === 'text'}
-						<div class="text-content">{@html item.text_content}</div>
+						{:else if item.content_type === 'video' && item.video}
+							<video autoplay muted loop playsinline>
+								<source
+									src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.video}"
+									type="video/mp4"
+								/>
+							</video>
+						{:else if item.content_type === 'text'}
+							<div class="text-content">{@html item.text_content}</div>
+						{/if}
+					{:else}
+						M{orderNum}
 					{/if}
-				{:else}
-					M{mobileNum}
-				{/if}
-			</div>
-		{/each}
-	</div>
+				</div>
+			{/each}
+		</div>
 
-	<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-		🢕
-	</button>
-</section>
+		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+			🢕
+		</button>
+	</section>
 
-	<!-- Overlay pour agrandissement -->
 	<div class="portfolio-overlay" id="portfolioOverlay" onclick={closeOverlay}>
 		<div class="overlay-content" onclick={closeOverlay}>
 			<div id="overlayContentContainer"></div>
@@ -317,9 +325,9 @@
 
 	<section id="course">
 		<h2>Parcours</h2>
-		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-			>🢕</button
-		>
+		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+			🢕
+		</button>
 	</section>
 
 	<section id="contact">

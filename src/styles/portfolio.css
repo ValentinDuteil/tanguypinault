@@ -1,4 +1,10 @@
+/* ============================================
+   PORTFOLIO
+   Organisation : Base → Mobile → Tablet → Desktop
+   ============================================ */
+
 /* === BASE === */
+
 #portfolio {
     min-height: auto;
     display: flex;
@@ -32,39 +38,21 @@
     font-size: 1rem;
     color: var(--beige-light);
     cursor: pointer;
-}
-
-/* === CADRES DORÉS POUR CONTENEURS VIDES ET TEXTES === */
-
-/* Tous les items ont des bordures par défaut */
-.portfolio-item {
     border: 2px solid var(--beige-medium);
     box-shadow: inset 0 0 0 2px var(--dark), inset 0 0 0 4px var(--beige-light);
-    transition: 
-        transform 4s ease-in-out,
-        border-color 4s ease-in-out,
-        box-shadow 4s ease-in-out,
-        filter 4s ease-in-out;
+    transition: transform 4s ease-in-out, border-color 4s ease-in-out, box-shadow 4s ease-in-out, filter 4s ease-in-out;
 }
 
-/* Supprimer les bordures pour images et vidéos */
 .portfolio-item:has(img),
 .portfolio-item:has(video) {
     border: none;
     box-shadow: none;
 }
 
-/* Items avec texte gardent les bordures mais style différent */
 .portfolio-item:has(.text-content) {
     border: 2px solid var(--gold);
     box-shadow: inset 0 0 0 2px var(--dark), inset 0 0 0 4px var(--beige-medium);
     background: rgba(26, 26, 26, 0.8);
-}
-
-/* === EFFET PULSE AU HOVER === */
-
-.portfolio-item {
-    transition: transform 4s ease-in-out;
 }
 
 .portfolio-item:hover {
@@ -72,39 +60,40 @@
     animation: pulse-shadow 5s infinite;
 }
 
-/* Items vides ou avec texte : animation douce des cadres */
 .portfolio-item:not(:has(img)):not(:has(video)):hover {
-    animation: 
-        cadre-dore 4s ease-in-out forwards,
-        pulse-shadow 5s infinite;
+    animation: cadre-dore 4s ease-in-out forwards, pulse-shadow 5s infinite;
 }
 
-/* Items avec texte : même effet */
 .portfolio-item:has(.text-content):hover {
-    animation: 
-        cadre-dore 4s ease-in-out forwards,
-        pulse-shadow 5s infinite;
+    animation: cadre-dore 4s ease-in-out forwards, pulse-shadow 5s infinite;
 }
 
-/* Animation progressive des cadres vers le doré */
+.portfolio-item img,
+.portfolio-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.portfolio-item .text-content {
+    padding: 1rem;
+    overflow-y: auto;
+    color: var(--beige-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
 @keyframes cadre-dore {
     0% {
         border-color: var(--beige-medium);
-        box-shadow: 
-            inset 0 0 0 2px var(--dark), 
-            inset 0 0 0 4px var(--beige-light),
-            0 0 0px rgba(184, 149, 106, 0);
+        box-shadow: inset 0 0 0 2px var(--dark), inset 0 0 0 4px var(--beige-light), 0 0 0px rgba(184, 149, 106, 0);
     }
     100% {
         border-color: var(--gold);
-        box-shadow: 
-            inset 0 0 0 2px var(--dark), 
-            inset 0 0 0 4px var(--gold),
-            0 0 20px rgba(184, 149, 106, 0.6);
+        box-shadow: inset 0 0 0 2px var(--dark), inset 0 0 0 4px var(--gold), 0 0 20px rgba(184, 149, 106, 0.6);
     }
 }
 
-/* Animation du pulse de l'ombre externe */
 @keyframes pulse-shadow {
     0%, 100% {
         filter: drop-shadow(0 0 20px rgba(184, 149, 106, 0.6));
@@ -114,44 +103,6 @@
     }
 }
 
-/* Désactiver le pulse sur le bouton toggle */
-.preview-toggle:hover {
-    animation: none;
-}
-
-/* === MOBILE === */
-.portfolio-grid {
-    grid-template-columns: repeat(2, 140px);
-    grid-template-rows: repeat(14, 206px);
-}
-
-/* Masquer items desktop/tablette */
-.desktop-tablet {
-    display: none;
-}
-
-/* Afficher items mobile */
-.mobile-only {
-    display: flex;
-}
-
-/* Placement mobile (items 18-31) */
-.item-18 { grid-column: 1 / 3; grid-row: 1 / 3; }
-.item-19 { grid-column: 1 / 3; grid-row: 3; }
-.item-20 { grid-column: 1; grid-row: 4; }
-.item-21 { grid-column: 2; grid-row: 4; }
-.item-22 { grid-column: 1 / 3; grid-row: 5 / 7; }
-.item-23 { grid-column: 1; grid-row: 7; }
-.item-24 { grid-column: 2; grid-row: 7; }
-.item-25 { grid-column: 1; grid-row: 8; }
-.item-26 { grid-column: 2; grid-row: 8; }
-.item-27 { grid-column: 1 / 3; grid-row: 9 / 11; }
-.item-28 { grid-column: 1; grid-row: 11; }
-.item-29 { grid-column: 2; grid-row: 11; }
-.item-30 { grid-column: 1 / 3; grid-row: 12; }
-.item-31 { grid-column: 1 / 3; grid-row: 13 / 15; }
-
-/* Animation fade-in au scroll */
 #portfolio .portfolio-item {
     opacity: 0;
     transform: translateY(20px);
@@ -163,84 +114,6 @@
     transform: translateY(0);
 }
 
-/* === TABLETTE === */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(3, 299px);
-        grid-template-rows: repeat(12, 188px);
-    }
-    
-    .mobile-only {
-        display: none;
-    }
-    
-    .desktop-tablet {
-        display: flex;
-    }
-    
-    /* Placement tablette (items 1-17) */
-    .item-1 { grid-column: 1; grid-row: 1 / 3; }
-    .item-2 { grid-column: 1; grid-row: 3; }
-    .item-3 { grid-column: 1 / 3; grid-row: 4; }
-    .item-4 { grid-column: 1; grid-row: 5 / 9; }
-    .item-5 { grid-column: 1; grid-row: 9 / 11; }
-    .item-6 { grid-column: 1; grid-row: 11; }
-    .item-7 { grid-column: 1 / 3; grid-row: 12; }
-    .item-8 { grid-column: 2 / 4; grid-row: 1; }
-    .item-9 { grid-column: 2; grid-row: 2 / 4; }
-    .item-10 { grid-column: 2; grid-row: 5 / 9; }
-    .item-11 { grid-column: 2 / 4; grid-row: 9; }
-    .item-12 { grid-column: 2; grid-row: 10 / 12; }
-    .item-13 { grid-column: 3; grid-row: 2; }
-    .item-14 { grid-column: 3; grid-row: 3 / 5; }
-    .item-15 { grid-column: 3; grid-row: 5 / 9; }
-    .item-16 { grid-column: 3; grid-row: 10; }
-    .item-17 { grid-column: 3; grid-row: 11 / 13; }
-}
-
-/* === DESKTOP === */
-@media (min-width: 1024px) {
-    .portfolio-grid {
-        grid-template-columns: repeat(4, 281px);
-        grid-template-rows: repeat(8, 177px);
-    }
-    
-    .mobile-only,
-    .item-10 {
-        display: none !important;
-    }
-    
-    .desktop-tablet {
-        display: flex;
-    }
-    
-    /* Placement desktop (items 1-9, 11-17) */
-    .item-1 { grid-column: 1; grid-row: 1 / 5; }
-    .item-2 { grid-column: 2; grid-row: 1 / 3; }
-    .item-3 { grid-column: 2; grid-row: 3; }
-    .item-4 { grid-column: 2 / 4; grid-row: 4; }
-    .item-5 { grid-column: 3 / 5; grid-row: 1; }
-    .item-6 { grid-column: 3; grid-row: 2 / 4; }
-    .item-7 { grid-column: 4; grid-row: 2; }
-    .item-8 { grid-column: 4; grid-row: 3 / 5; }
-    .item-9 { grid-column: 1; grid-row: 5 / 7; }
-    .item-11 { grid-column: 1; grid-row: 7; }
-    .item-12 { grid-column: 1 / 3; grid-row: 8; }
-    .item-13 { grid-column: 2 / 4; grid-row: 5; }
-    .item-14 { grid-column: 2; grid-row: 6 / 8; }
-    .item-15 { grid-column: 3; grid-row: 6; }
-    .item-16 { grid-column: 3; grid-row: 7 / 9; }
-    .item-17 { grid-column: 4; grid-row: 5 / 9; }
-}
-
-/* Responsive titres */
-@media (min-width: 768px) {
-    #portfolio h2 {
-        font-size: 5rem;
-    }
-}
-
-/* Respecter prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
     #portfolio .portfolio-item {
         opacity: 1;
@@ -249,9 +122,8 @@
     }
 }
 
-/* === SYSTÈME DE TOGGLE POUR TANGUY === */
+/* === TOGGLE === */
 
-/* Bouton toggle */
 .preview-toggle {
     position: fixed;
     bottom: 2rem;
@@ -274,9 +146,9 @@
     background: var(--beige-light);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    animation: none;
 }
 
-/* Labels de position (cachés par défaut) */
 .position-label {
     position: absolute;
     top: 0.5rem;
@@ -293,31 +165,12 @@
     pointer-events: none;
 }
 
-/* Afficher les labels quand toggle actif */
 .portfolio-grid.show-positions .position-label {
     opacity: 1;
 }
 
-/* Images/vidéos */
-.portfolio-item img,
-.portfolio-item video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* === OVERLAY === */
 
-/* Contenu texte */
-.portfolio-item .text-content {
-    padding: 1rem;
-    overflow-y: auto;
-    color: var(--beige-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-/* === OVERLAY / POPUP POUR AGRANDISSEMENT === */
-
-/* Overlay noir semi-transparent */
 .portfolio-overlay {
     position: fixed;
     top: 0;
@@ -338,7 +191,6 @@
     display: flex;
 }
 
-/* Fenêtre de contenu avec bordure dorée discrète */
 .overlay-content {
     position: relative;
     max-width: 95vw;
@@ -350,7 +202,6 @@
     background: transparent;
 }
 
-/* Images et vidéos dans l'overlay - jamais croppées */
 .overlay-content img,
 .overlay-content video {
     width: 100%;
@@ -361,12 +212,10 @@
     display: block;
 }
 
-/* Pour les vidéos, laisser de la place pour les contrôles */
 .overlay-content video {
     max-height: calc(95vh - 60px);
 }
 
-/* Texte dans l'overlay */
 .overlay-content .text-content {
     max-width: 70vw;
     max-height: 90vh;
@@ -378,23 +227,119 @@
     line-height: 1.8;
 }
 
-/* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* === MOBILE (< 768px) === */
+
+.portfolio-grid {
+    grid-template-columns: repeat(2, 140px);
+    grid-template-rows: repeat(14, 206px);
+}
+
+.desktop-tablet, .desktop-only, .tablet-only {
+    display: none;
+}
+
+.mobile-only {
+    display: flex;
+}
+
+.mobile-only.item-1 { grid-column: 1 / 3; grid-row: 1 / 3; }
+.mobile-only.item-2 { grid-column: 1 / 3; grid-row: 3; }
+.mobile-only.item-3 { grid-column: 1; grid-row: 4; }
+.mobile-only.item-4 { grid-column: 2; grid-row: 4; }
+.mobile-only.item-5 { grid-column: 1 / 3; grid-row: 5 / 7; }
+.mobile-only.item-6 { grid-column: 1; grid-row: 7; }
+.mobile-only.item-7 { grid-column: 2; grid-row: 7; }
+.mobile-only.item-8 { grid-column: 1; grid-row: 8; }
+.mobile-only.item-9 { grid-column: 2; grid-row: 8; }
+.mobile-only.item-10 { grid-column: 1 / 3; grid-row: 9 / 11; }
+.mobile-only.item-11 { grid-column: 1; grid-row: 11; }
+.mobile-only.item-12 { grid-column: 2; grid-row: 11; }
+.mobile-only.item-13 { grid-column: 1 / 3; grid-row: 12; }
+.mobile-only.item-14 { grid-column: 1 / 3; grid-row: 13 / 15; }
+
+/* === TABLET (768px - 1023px) === */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    #portfolio h2 {
+        font-size: 5rem;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 299px);
+        grid-template-rows: repeat(12, 188px);
     }
+
+    .mobile-only, .desktop-only {
+        display: none;
+    }
+
+    .desktop-tablet, .tablet-only {
+        display: flex;
+    }
+
+    .item-1 { grid-column: 1; grid-row: 1 / 3; }
+    .item-2 { grid-column: 1; grid-row: 3; }
+    .item-3 { grid-column: 1 / 3; grid-row: 4; }
+    .item-4 { grid-column: 1; grid-row: 5 / 9; }
+    .item-5 { grid-column: 1; grid-row: 9 / 11; }
+    .item-6 { grid-column: 1; grid-row: 11; }
+    .item-7 { grid-column: 1 / 3; grid-row: 12; }
+    .item-8 { grid-column: 2 / 4; grid-row: 1; }
+    .item-9 { grid-column: 2; grid-row: 2 / 4; }
+    .item-10 { grid-column: 2; grid-row: 5 / 9; }
+    .item-11 { grid-column: 2 / 4; grid-row: 9; }
+    .item-12 { grid-column: 2; grid-row: 10 / 12; }
+    .item-13 { grid-column: 3; grid-row: 2; }
+    .item-14 { grid-column: 3; grid-row: 3 / 5; }
+    .item-15 { grid-column: 3; grid-row: 5 / 9; }
+    .item-16 { grid-column: 3; grid-row: 10; }
+    .item-17 { grid-column: 3; grid-row: 11 / 13; }
+}
+
+/* === DESKTOP (>= 1024px) === */
+
+@media (min-width: 1024px) {
+    #portfolio h2 {
+        font-size: 5rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(4, 281px);
+        grid-template-rows: repeat(8, 177px);
+    }
+
+    .mobile-only, .tablet-only, .item-10 {
+        display: none !important;
+    }
+
+    .desktop-tablet, .desktop-only {
+        display: flex;
+    }
+
+    .item-1 { grid-column: 1; grid-row: 1 / 5; }
+    .item-2 { grid-column: 2; grid-row: 1 / 3; }
+    .item-3 { grid-column: 2; grid-row: 3; }
+    .item-4 { grid-column: 2 / 4; grid-row: 4; }
+    .item-5 { grid-column: 3 / 5; grid-row: 1; }
+    .item-6 { grid-column: 3; grid-row: 2 / 4; }
+    .item-7 { grid-column: 4; grid-row: 2; }
+    .item-8 { grid-column: 4; grid-row: 3 / 5; }
+    .item-9 { grid-column: 1; grid-row: 5 / 7; }
+    .item-11 { grid-column: 1; grid-row: 7; }
+    .item-12 { grid-column: 1 / 3; grid-row: 8; }
+    .item-13 { grid-column: 2 / 4; grid-row: 5; }
+    .item-14 { grid-column: 2; grid-row: 6 / 8; }
+    .item-15 { grid-column: 3; grid-row: 6; }
+    .item-16 { grid-column: 3; grid-row: 7 / 9; }
+    .item-17 { grid-column: 4; grid-row: 5 / 9; }
 }
