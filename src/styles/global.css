@@ -67,3 +67,28 @@ ul {
     background: linear-gradient(to right, transparent, var(--gold), transparent);
     margin: 0;
 }
+
+/* === ACCESSIBILITÉ : FOCUS VISIBLE === */
+
+/* Désactiver le outline par défaut */
+*:focus {
+    outline: none;
+}
+
+/* Outline doré personnalisé pour navigation clavier */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(184, 149, 106, 0.2);
+}
+
+/* Focus sur les items portfolio */
+.portfolio-item:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    transform: scale(1.02);
+}

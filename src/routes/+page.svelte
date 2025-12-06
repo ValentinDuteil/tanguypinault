@@ -217,6 +217,13 @@
 			}
 		});
 
+		// Fermer l'overlay avec Échap
+		window.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				closeOverlay();
+			}
+		});
+
 		const links = document.querySelectorAll('a[href^="#"]');
 
 		links.forEach((link) => {
@@ -265,7 +272,12 @@
 	</nav>
 </header>
 
-<div class="menu-overlay" class:active={menuOpen} onclick={toggleMenu}></div>
+<div
+	class="menu-overlay"
+	class:active={menuOpen}
+	onclick={toggleMenu}
+	aria-hidden={!menuOpen}
+></div>
 
 <main>
 	<section
@@ -309,7 +321,11 @@
 		{:else}
 			<p>Chargement...</p>
 		{/if}
-		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+		<button
+			class="scroll-top"
+			onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+			aria-label="Retour en haut de la page"
+		>
 			🢕
 		</button>
 	</section>
@@ -318,7 +334,14 @@
 		<h2>Portfolio</h2>
 
 		{#if showToggleButton}
-			<button class="preview-toggle" onclick={() => (showPositions = !showPositions)}>
+			<button
+				class="preview-toggle"
+				onclick={() => (showPositions = !showPositions)}
+				aria-label={showPositions
+					? 'Masquer les numéros de positions'
+					: 'Afficher les numéros de positions'}
+				aria-pressed={showPositions}
+			>
 				{showPositions ? '🔒 Masquer numéros' : '👁️ Voir numéros'}
 			</button>
 		{/if}
@@ -450,12 +473,23 @@
 			{/each}
 		</div>
 
-		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+		<button
+			class="scroll-top"
+			onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+			aria-label="Retour en haut de la page"
+		>
 			🢕
 		</button>
 	</section>
 
-	<div class="portfolio-overlay" id="portfolioOverlay" onclick={closeOverlay}>
+	<div
+		class="portfolio-overlay"
+		id="portfolioOverlay"
+		onclick={closeOverlay}
+		role="dialog"
+		aria-modal="true"
+		aria-label="Agrandissement de l'image"
+	>
 		<div class="overlay-content" onclick={closeOverlay}>
 			<div id="overlayContentContainer"></div>
 		</div>
@@ -589,7 +623,11 @@
 			</div>
 		</div>
 
-		<button class="scroll-top" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+		<button
+			class="scroll-top"
+			onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+			aria-label="Retour en haut de la page"
+		>
 			🢕
 		</button>
 	</section>
