@@ -109,3 +109,64 @@
         max-width: 600px;
     }
 }
+
+/* Honeypot (invisible) */
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Messages de feedback */
+.form-message {
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.95rem;
+    animation: slideDown 0.3s ease;
+}
+
+.form-message.success {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid #4CAF50;
+    color: var(--beige-light);
+}
+
+.form-message.error {
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid #F44336;
+    color: var(--beige-light);
+}
+
+.form-message.sending {
+    background: rgba(184, 149, 106, 0.1);
+    border: 1px solid var(--gold);
+    color: var(--beige-light);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Bouton désactivé */
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Champs désactivés */
+.form-group input:disabled,
+.form-group textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

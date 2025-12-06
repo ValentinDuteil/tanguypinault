@@ -21,6 +21,14 @@
 	let expositions = [];
 	let publications = [];
 	let formations = [];
+	let contactForm = {
+		name: '',
+		email: '',
+		message: '',
+		honeypot: ''
+	};
+	let formStatus = ''; // '', 'sending', 'success', 'error'
+	let formMessage = '';
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
@@ -133,6 +141,64 @@
 
 		const videos = overlay.querySelectorAll('video');
 		videos.forEach((video) => video.pause());
+	}
+
+	async function handleContactSubmit(e) {
+		e.preventDefault();
+
+		// Anti-spam : si honeypot rempli, ignorer
+		if (contactForm.honeypot !== '') {
+			console.log('Bot détecté');
+			return;
+		}
+
+		// Validation basique
+		if (contactForm.name.length < 2) {
+			formStatus = 'error';
+			formMessage = 'Le nom doit contenir au moins 2 caractères.';
+			return;
+		}
+
+		if (contactForm.message.length < 10) {
+			formStatus = 'error';
+			formMessage = 'Le message doit contenir au moins 10 caractères.';
+			return;
+		}
+
+		// Envoi
+		formStatus = 'sending';
+		formMessage = 'Envoi en cours...';
+
+		try {
+			await pb.collection('messages').create({
+				name: contactForm.name,
+				email: contactForm.email,
+				message: contactForm.message,
+				honeypot: contactForm.honeypot,
+				read: false
+			});
+
+			formStatus = 'success';
+			formMessage = 'Message envoyé avec succès ! Je vous répondrai rapidement.';
+
+			// Réinitialiser le formulaire
+			contactForm = {
+				name: '',
+				email: '',
+				message: '',
+				honeypot: ''
+			};
+
+			// Masquer le message après 5 secondes
+			setTimeout(() => {
+				formStatus = '';
+				formMessage = '';
+			}, 5000);
+		} catch (error) {
+			console.error('Erreur envoi message:', error);
+			formStatus = 'error';
+			formMessage = "Erreur lors de l'envoi. Veuillez réessayer.";
+		}
 	}
 
 	onMount(() => {
@@ -530,23 +596,63 @@
 
 	<section id="contact">
 		<h2>Contact</h2>
-		<form class="contact-form">
+		<form class="contact-form" onsubmit={handleContactSubmit}>
 			<div class="form-group">
 				<label for="name">Nom</label>
-				<input type="text" id="name" name="name" required />
+				<input
+					type="text"
+					id="name"
+					name="name"
+					bind:value={contactForm.name}
+					required
+					disabled={formStatus === 'sending'}
+				/>
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input type="email" id="email" name="email" required />
+				<input
+					type="email"
+					id="email"
+					name="email"
+					bind:value={contactForm.email}
+					required
+					disabled={formStatus === 'sending'}
+				/>
 			</div>
 
 			<div class="form-group">
 				<label for="message">Message</label>
-				<textarea id="message" name="message" rows="5" required></textarea>
+				<textarea
+					id="message"
+					name="message"
+					rows="5"
+					bind:value={contactForm.message}
+					required
+					disabled={formStatus === 'sending'}
+				></textarea>
 			</div>
 
-			<button type="submit" class="submit-btn">Envoyer</button>
+			<!-- Honeypot (invisible pour les humains) -->
+			<input
+				type="text"
+				name="website"
+				class="honeypot"
+				bind:value={contactForm.honeypot}
+				tabindex="-1"
+				autocomplete="off"
+			/>
+
+			<!-- Messages de feedback -->
+			{#if formMessage}
+				<div class="form-message {formStatus}">
+					{formMessage}
+				</div>
+			{/if}
+
+			<button type="submit" class="submit-btn" disabled={formStatus === 'sending'}>
+				{formStatus === 'sending' ? 'Envoi...' : 'Envoyer'}
+			</button>
 		</form>
 	</section>
 </main>
