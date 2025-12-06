@@ -1,4 +1,4 @@
-/* ============================================
+css/* ============================================
    PORTFOLIO
    Organisation : Base → Mobile → Tablet → Desktop
    ============================================ */
@@ -200,6 +200,7 @@
     animation: scaleIn 0.3s ease-in-out;
     padding: 2px;
     background: transparent;
+    overflow: hidden; /* Cache la légende qui dépasse */
 }
 
 .overlay-content img,
@@ -226,6 +227,78 @@
     font-size: 1.2rem;
     line-height: 1.8;
 }
+
+/* === LÉGENDE OVERLAY === */
+
+.overlay-media-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Cache la légende hors du cadre */
+}
+
+.overlay-legend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0.7); /* Plus transparent comme le menu */
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gold);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 10;
+    pointer-events: none; /* Ne bloque pas les clics */
+}
+
+/* Desktop : Afficher au survol */
+@media (hover: hover) {
+    .overlay-media-wrapper:hover .overlay-legend {
+        transform: translateY(0);
+    }
+}
+
+/* Mobile/Tactile : Toujours visible */
+@media (hover: none) {
+    .overlay-legend {
+        transform: translateY(0);
+    }
+}
+
+.legend-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--beige-light);
+    margin-bottom: 0.3rem;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.legend-details {
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-style: italic;
+}
+
+/* Mobile : légende plus petite */
+@media (max-width: 767px) {
+    .overlay-legend {
+        padding: 0.75rem 1rem;
+    }
+    
+    .legend-title {
+        font-size: 1rem;
+    }
+    
+    .legend-details {
+        font-size: 0.85rem;
+    }
+}
+
+/* === ANIMATIONS === */
 
 @keyframes fadeIn {
     from { opacity: 0; }

@@ -105,35 +105,70 @@
 	}
 
 	function openOverlay(item) {
-		const overlay = document.getElementById('portfolioOverlay');
-		const container = document.getElementById('overlayContentContainer');
+	const overlay = document.getElementById('portfolioOverlay');
+	const container = document.getElementById('overlayContentContainer');
 
-		container.innerHTML = '';
+	container.innerHTML = '';
 
-		if (item.content_type === 'image' && item.image) {
-			const img = document.createElement('img');
-			img.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.image}`;
-			img.alt = item.title || '';
-			img.style.objectPosition = item.crop_position || 'center';
-			container.appendChild(img);
-		} else if (item.content_type === 'video' && item.video) {
-			const video = document.createElement('video');
-			video.controls = true;
-			video.autoplay = true;
-			const source = document.createElement('source');
-			source.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.video}`;
-			source.type = 'video/mp4';
-			video.appendChild(source);
-			container.appendChild(video);
-		} else if (item.content_type === 'text') {
-			const textDiv = document.createElement('div');
-			textDiv.className = 'text-content';
-			textDiv.innerHTML = item.text_content;
-			container.appendChild(textDiv);
-		}
+	// Créer un wrapper pour l'image/vidéo avec la légende en overlay
+	const mediaWrapper = document.createElement('div');
+	mediaWrapper.className = 'overlay-media-wrapper';
 
-		overlay.classList.add('active');
+	// Ajouter le contenu (image/vidéo/texte)
+	if (item.content_type === 'image' && item.image) {
+		const img = document.createElement('img');
+		img.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.image}`;
+		img.alt = generateAltText(item);
+		img.style.objectPosition = item.crop_position || 'center';
+		mediaWrapper.appendChild(img);
+	} else if (item.content_type === 'video' && item.video) {
+		const video = document.createElement('video');
+		video.controls = true;
+		video.autoplay = true;
+		const source = document.createElement('source');
+		source.src = `http://127.0.0.1:8090/api/files/${item.collectionId}/${item.id}/${item.video}`;
+		source.type = 'video/mp4';
+		video.appendChild(source);
+		mediaWrapper.appendChild(video);
+	} else if (item.content_type === 'text') {
+		const textDiv = document.createElement('div');
+		textDiv.className = 'text-content';
+		textDiv.innerHTML = item.text_content;
+		mediaWrapper.appendChild(textDiv);
 	}
+
+	// Créer la légende en overlay si des infos existent
+	if (item.artwork_title || item.year || item.medium || item.dimensions) {
+		const legend = document.createElement('div');
+		legend.className = 'overlay-legend';
+		
+		let legendHTML = '';
+		
+		// Ligne 1 : Titre et année
+		if (item.artwork_title || item.year) {
+			legendHTML += '<div class="legend-title">';
+			if (item.artwork_title) legendHTML += item.artwork_title;
+			if (item.artwork_title && item.year) legendHTML += ', ';
+			if (item.year) legendHTML += item.year;
+			legendHTML += '</div>';
+		}
+		
+		// Ligne 2 : Medium et dimensions
+		if (item.medium || item.dimensions) {
+			legendHTML += '<div class="legend-details">';
+			if (item.medium) legendHTML += item.medium;
+			if (item.medium && item.dimensions) legendHTML += ' | ';
+			if (item.dimensions) legendHTML += item.dimensions;
+			legendHTML += '</div>';
+		}
+		
+		legend.innerHTML = legendHTML;
+		mediaWrapper.appendChild(legend);
+	}
+
+	container.appendChild(mediaWrapper);
+	overlay.classList.add('active');
+}
 
 	function closeOverlay() {
 		const overlay = document.getElementById('portfolioOverlay');
@@ -141,6 +176,18 @@
 
 		const videos = overlay.querySelectorAll('video');
 		videos.forEach((video) => video.pause());
+	}
+
+	// Générer un alt text descriptif à partir des infos œuvre
+	function generateAltText(item) {
+		const parts = [];
+
+		if (item.artwork_title) parts.push(item.artwork_title);
+		if (item.year) parts.push(item.year);
+		if (item.medium) parts.push(item.medium);
+		if (item.dimensions) parts.push(item.dimensions);
+
+		return parts.length > 0 ? parts.join(', ') : item.title || 'Œuvre sans titre';
 	}
 
 	async function handleContactSubmit(e) {
@@ -392,7 +439,7 @@
 							{#if item.content_type === 'image' && item.image}
 								<img
 									src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
-									alt={item.title}
+									alt={generateAltText(item)}
 									style="object-position: {item.crop_position || 'center'};"
 								/>
 							{:else if item.content_type === 'video' && item.video}
@@ -453,7 +500,7 @@
 						{#if item.content_type === 'image' && item.image}
 							<img
 								src="http://127.0.0.1:8090/api/files/{item.collectionId}/{item.id}/{item.image}"
-								alt={item.title}
+								alt={generateAltText(item)}
 								style="object-position: {item.crop_position || 'center'};"
 							/>
 						{:else if item.content_type === 'video' && item.video}
